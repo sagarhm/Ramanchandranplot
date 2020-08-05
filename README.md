@@ -16,7 +16,7 @@ Python3 implementation of the Ramachandran plot
 
 ### Example output:
 
-![Example output](https://imgur.com/a/p9fFHqz)
+![Example output](https://imgur.com/a/p9fFHqz.png)
 
 ### Dependencies:
 
