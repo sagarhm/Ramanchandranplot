@@ -11,7 +11,7 @@ Python3 implementation of the Ramachandran plot
 ### Usage:
     import os
     import ramachandarnplot as rama
-	pdb = "example.pdb" #path of pdb file any pdb which is required to be ploted.
+	pdb = "1hcv.pdb" #path of pdb file any pdb which is required to be ploted.
     rama.plot_ramachandran(pdb)
 
 ### Example output:
