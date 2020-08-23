@@ -11,7 +11,7 @@ Python3 implementation of the Ramachandran plot
 ### Usage:
     import os
     import ramachandarnplot as rama
-	pdb = "1hcv.pdb" #path of pdb file any pdb which is required to be ploted.
+    pdb = "1hcv.pdb" #path of pdb file any pdb which is required to be ploted.
     rama.plot_ramachandran(pdb)
 
 ### Example output:
@@ -22,11 +22,11 @@ Python3 implementation of the Ramachandran plot
 
 Running ramachandarnplot requires *matplotlib*, *numpy* and *biopython*
 
-To install these on a standard Linux system:
+To install these on a standard win system:
 
-    pip install python3-matplotlib
-    pip install python3-biopython
-    pip install python3-numpy
+    pip install matplotlib
+    pip install biopython
+    pip install numpy
 
 For the standard PSI and PHI preferences see:
 
