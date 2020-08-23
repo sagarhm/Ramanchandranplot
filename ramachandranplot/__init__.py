@@ -1,21 +1,14 @@
 
 #Ramachandran Plot
-#from __future__ import division, print_function
 import math
 import sys
 import os
-from os.path import abspath
-import os.path
 import matplotlib.pyplot as plt
 import numpy as np
 from Bio import PDB
 from matplotlib import colors
 import matplotlib.patches as mpatches
 import matplotlib.markers as mmark
-import matplotlib.lines as mlines
-
-
-
 
 def plot_ramachandran(file):
     __pdb__=file
@@ -50,7 +43,7 @@ def plot_ramachandran(file):
         }
     }
     
-    r_path = os.path.abspath(os.path.dirname(__file__))
+    r_path = os.path.abspath(os.path.dirname(__file__))#*
     rama_pref_values = {}
     for key, val in rama_preferences.items():
         rama_pref_values[key] = np.full((360, 360), 0, dtype=np.float64)
@@ -73,12 +66,8 @@ def plot_ramachandran(file):
         normals[key] = {"x": [], "y": []}
         outliers[key] = {"x": [], "y": [],'Res':[]}
 
-   # Calculate the torsion angle of the inputs
-   # for inp in sys.argv[1:]:
-        #if not os.path.isfile(inp):
-           # print("{} not found!".format(inp))
-            #continue
-    structure = PDB.PDBParser().get_structure('input_structure', __pdb__)
+   # Calculate the torsion angle of the pdb file.
+    structure = PDB.PDBParser().get_structure('input_structure', __pdb__)#pdb parsing biopython algorithm.
     for model in structure:
         for chain in model:
             polypeptides = PDB.PPBuilder().build_peptides(chain)
@@ -102,8 +91,7 @@ def plot_ramachandran(file):
                             cc_type = "PRE-PRO"
                             dd_type = "PRO"
                         if rama_pref_values[aa_type][int(math.degrees(psi)) + 180][int(math.degrees(phi)) + 180] < \
-                                rama_preferences[aa_type]["bounds"][1]:
-                            #print("{} {} {} {}{} is an outlier".format(__file__, model, chain, res_name, res_num))
+                                rama_preferences[aa_type]["bounds"][1]
                             outliers[aa_type]["x"].append(math.degrees(phi))
                             outliers[aa_type]["y"].append(math.degrees(psi))
                             outliers[aa_type]['Res'].append(res_name+'_'+str(res_num))
@@ -114,12 +102,11 @@ def plot_ramachandran(file):
 
     # Generate the plots
     plt.figure(figsize=(10,10))
-    for idx, (key, val) in enumerate(sorted(rama_preferences.items(), key=lambda x: x[0].lower())):       
-        #plt.title(key,Ramachandran plot)
+    for idx, (key, val) in enumerate(sorted(rama_preferences.items(), key=lambda x: x[0].lower())):      
         plt.imshow(rama_pref_values[key], cmap=rama_preferences[key]["cmap"],
                    norm=colors.BoundaryNorm(rama_preferences[key]["bounds"], rama_preferences[key]["cmap"].N),
                    extent=(-180, 180, 180, -180),alpha=0.7)
-
+        #markers for different aminoacides residues i,e GLY,General,PRO,PRE-PRO.
         plt.scatter(normals[aa_type]["x"], normals[aa_type]["y"],color="k",s=[10],marker='o')
         plt.scatter(normals[bb_type]["x"], normals[bb_type]["y"],color="k",s=[35],marker='^')
         plt.scatter(normals[cc_type]["x"], normals[cc_type]["y"],color="k",s=[35],marker='x')
@@ -136,14 +123,14 @@ def plot_ramachandran(file):
         ax = plt.gca()
         ax.set_xlim(-180, 180)
         ax.set_ylim(-180, 180)
-        ax.set_xticks([-180, -135, -90, -45, 0, 45, 90, 135, 180], minor=False)
+        ax.set_xticks([-180, -135, -90, -45, 0, 45, 90, 135, 180], minor=False)# For renamining the plot x, y vlues.
         ax.set_yticks([-180, -135, -90, -45, 0, 45, 90, 135, 180], minor=False)
         plt.plot([-180, 180], [0, 0], linewidth=1,color="k",alpha=0.2)
         plt.plot([0, 0], [-180, 180], linewidth=1,color="k",alpha=0.2)
         plt.xlabel(r'$\phi$',fontsize=14,color="k",alpha=1)
         plt.ylabel(r'$\psi$',fontsize=14,color="k",alpha=1)
         plt.grid(linestyle='--',color="k",alpha=0.4)
-        plt.title('Ramachandran Plot',fontsize=15,color="k",alpha=1,)
+        plt.title('Ramachandran Plot',fontsize=15,color="k",alpha=1,) # for plotting tittle of plot .
             
     A = mpatches.Patch(color='deepskyblue',lw=15)#good metho
     B = mpatches.Patch(color='skyblue',lw=15)
@@ -172,8 +159,7 @@ def plot_ramachandran(file):
     o = mlines.Line2D([], [], color='black', marker='',linestyle='None',
                           markersize=7,label="Outliers")
     plt.legend(frameon=False,handles=[A,B,C,D,E,F,I,J,k,L,H,G,M,N,o],loc='upper left', labelspacing=2,fontsize=10,ncol=3,columnspacing=-2.8,bbox_to_anchor=(0.01, -0.06))
-    plt.show() 
+    #plt.savefig("asd.png", dpi=300) #Uncommet this line of you want so save the plot in a specific location   
+    plt.show()
    
-    # plt.show
-    #plt.tight_layout()
-    # plt.savefig("asd.png", dpi=300) #Uncommet this line of you want so save the plot in a specific location
+    
